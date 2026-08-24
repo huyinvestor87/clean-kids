@@ -1,287 +1,52 @@
 <!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#dff7ff" />
-  <title>Clean Kids - Tập 1: Tắm sạch trước bữa tối</title>
-  <style>
-    :root {
-      --ink: #17324d;
-      --sky: #dff7ff;
-      --blue: #4da8ff;
-      --green: #58c77a;
-      --yellow: #ffd85a;
-      --card: rgba(255,255,255,.92);
-      --shadow: 0 12px 30px rgba(36, 82, 120, .16);
-    }
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html, body { margin: 0; min-height: 100%; font-family: ui-rounded, "SF Pro Rounded", system-ui, sans-serif; color: var(--ink); background: linear-gradient(#dff7ff, #fff7dc); }
-    body { min-height: 100dvh; display: grid; place-items: center; padding: 12px; overflow-x: hidden; }
-    button { font: inherit; }
-    .app { width: min(100%, 900px); }
-    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
-    .brand { font-weight: 900; font-size: clamp(20px, 4vw, 30px); }
-    .episode { background:#fff; border-radius:999px; padding:8px 14px; font-weight:800; box-shadow:var(--shadow); }
-    .scene { position:relative; min-height:min(720px, calc(100dvh - 120px)); overflow:hidden; border-radius:28px; background:linear-gradient(#bcecff 0 44%, #f7efd6 44% 100%); box-shadow:var(--shadow); border:4px solid rgba(255,255,255,.85); }
-    .sun { position:absolute; width:78px; height:78px; border-radius:50%; background:#ffe16b; top:34px; right:42px; box-shadow:0 0 0 14px rgba(255,225,107,.25); }
-    .cloud { position:absolute; width:110px; height:35px; border-radius:30px; background:#fff; top:72px; left:45px; opacity:.9; }
-    .cloud:before,.cloud:after { content:""; position:absolute; background:#fff; border-radius:50%; }
-    .cloud:before { width:48px;height:48px;left:15px;top:-22px; }
-    .cloud:after { width:60px;height:60px;right:12px;top:-30px; }
-    .room-line { position:absolute; inset:44% 0 auto; height:6px; background:#d2c39d; }
-    .bathroom { position:absolute; left:5%; bottom:22%; width:43%; height:42%; border-radius:26px; background:linear-gradient(135deg,#eefcff,#cfefff); border:4px solid #fff; box-shadow:inset 0 0 0 3px #b5ddec; }
-    .bathroom:before { content:"PHÒNG TẮM"; position:absolute; top:12px; left:16px; font-size:13px; font-weight:900; letter-spacing:.08em; opacity:.6; }
-    .shower { position:absolute; top:50px; left:50%; width:74px; height:34px; border:8px solid #7aa7c7; border-bottom:0; border-left:0; border-radius:0 30px 0 0; transform:translateX(-8px); }
-    .shower:after { content:""; position:absolute; right:-8px; bottom:-14px; width:52px; height:18px; border-radius:14px 14px 6px 6px; background:#6d97b5; }
-    .water { position:absolute; top:103px; left:58%; width:65px; height:170px; opacity:0; transition:.25s; pointer-events:none; background:repeating-linear-gradient(90deg, transparent 0 8px, rgba(64,170,255,.45) 8px 12px); filter:drop-shadow(0 2px 2px rgba(255,255,255,.8)); }
-    .water.on { opacity:1; animation:water 1s linear infinite; }
-    @keyframes water { to { background-position-y:30px; } }
-    .dinner { position:absolute; right:4%; bottom:25%; width:40%; height:28%; border-radius:24px; background:#fff4cf; border:4px solid #fff; box-shadow:inset 0 0 0 3px #f1dca7; }
-    .table { position:absolute; left:12%; right:12%; bottom:24%; height:22px; border-radius:14px; background:#bb7a45; }
-    .table:before,.table:after { content:""; position:absolute; width:13px; height:92px; background:#9a6138; top:14px; }
-    .table:before { left:18%; } .table:after { right:18%; }
-    .plate { position:absolute; width:110px; height:46px; border-radius:50%; background:#fff; left:50%; bottom:35%; transform:translateX(-50%); box-shadow:inset 0 0 0 7px #d8ecf7; }
-    .rice { position:absolute; width:70px; height:38px; border-radius:50% 50% 42% 42%; background:#fffdf4; left:50%; bottom:42%; transform:translateX(-50%); box-shadow:inset 0 -8px 0 #f0ead9; }
-    .kid { position:absolute; left:18%; bottom:24%; width:150px; height:250px; transition:left .7s ease, bottom .7s ease, transform .3s; z-index:4; }
-    .kid.at-bath { left:22%; bottom:24%; }
-    .kid.at-table { left:67%; bottom:20%; transform:scale(.94); }
-    .head { position:absolute; top:15px; left:39px; width:76px; height:82px; border-radius:46% 46% 44% 44%; background:#f3bc8e; border:4px solid rgba(113,70,44,.15); }
-    .hair { position:absolute; width:80px; height:38px; border-radius:42px 42px 18px 18px; background:#4d3528; top:8px; left:37px; transform:rotate(-4deg); }
-    .eye { position:absolute; top:47px; width:8px; height:11px; border-radius:50%; background:#26384d; z-index:2; }
-    .eye.l { left:59px; } .eye.r { left:91px; }
-    .smile { position:absolute; top:72px; left:70px; width:22px; height:10px; border-bottom:4px solid #a75b55; border-radius:50%; z-index:2; }
-    .body { position:absolute; top:94px; left:31px; width:92px; height:100px; border-radius:28px 28px 18px 18px; background:#ff9f6e; }
-    .arm { position:absolute; top:105px; width:25px; height:90px; border-radius:20px; background:#f3bc8e; transform-origin:top center; }
-    .arm.l { left:20px; transform:rotate(12deg); } .arm.r { right:14px; transform:rotate(-15deg); }
-    .leg { position:absolute; top:182px; width:29px; height:72px; border-radius:18px; background:#4b75b8; }
-    .leg.l { left:43px; } .leg.r { left:82px; }
-    .dirt { position:absolute; width:16px; height:12px; border-radius:50%; background:#8a684f; opacity:.78; z-index:5; transition:.25s; }
-    .d1{top:80px;left:43px}.d2{top:124px;left:27px}.d3{top:143px;right:18px}.d4{top:177px;left:68px}.d5{top:212px;right:40px}
-    .germ { position:absolute; z-index:6; width:34px; height:34px; border-radius:48% 52% 46% 54%; background:#7ad35c; border:3px solid #2c9d55; display:grid; place-items:center; font-size:18px; animation:bob 1.2s ease-in-out infinite alternate; transition:.3s; }
-    .g1{top:66px;right:13px}.g2{top:129px;left:14px;animation-delay:.25s}.g3{top:186px;right:22px;animation-delay:.55s}
-    @keyframes bob { to { transform:translateY(-8px) rotate(8deg); } }
-    .cleaning .dirt { opacity:0; transform:scale(.4); }
-    .cleaning .germ { opacity:0; transform:scale(.2) translateY(-40px); }
-    .soap { position:absolute; left:16%; bottom:13%; width:76px; height:50px; border-radius:16px; background:#ff8fc4; border:4px solid #fff; display:grid; place-items:center; font-weight:900; box-shadow:0 8px 20px rgba(0,0,0,.12); cursor:grab; user-select:none; touch-action:none; z-index:10; }
-    .soap.active { transform:scale(1.08) rotate(-5deg); }
-    .bubble { position:absolute; border-radius:50%; border:2px solid rgba(64,157,205,.35); background:rgba(255,255,255,.7); pointer-events:none; z-index:8; animation:float .9s ease-out forwards; }
-    @keyframes float { to { transform:translateY(-70px) scale(1.35); opacity:0; } }
-    .panel { position:absolute; left:50%; transform:translateX(-50%); bottom:16px; width:min(92%,720px); padding:14px; border-radius:22px; background:var(--card); box-shadow:var(--shadow); z-index:20; backdrop-filter:blur(10px); }
-    .message { font-size:clamp(17px,3vw,22px); font-weight:900; text-align:center; margin-bottom:10px; min-height:30px; }
-    .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-    .btn { border:0; border-radius:16px; padding:12px 18px; min-height:48px; font-weight:900; color:#17324d; background:#fff; box-shadow:0 5px 0 rgba(32,74,110,.16); cursor:pointer; }
-    .btn.primary { background:var(--yellow); }
-    .btn.good { background:#8ce5a4; }
-    .btn:active { transform:translateY(3px); box-shadow:0 2px 0 rgba(32,74,110,.16); }
-    .progress { height:18px; border-radius:999px; background:#d8e8ee; overflow:hidden; margin:8px 0 12px; border:3px solid #fff; }
-    .progress > div { height:100%; width:0%; background:linear-gradient(90deg,#5ec7ff,#67df94); transition:width .25s; }
-    .hint { text-align:center; font-size:14px; font-weight:700; opacity:.72; }
-    .toast { position:absolute; left:50%; top:16%; transform:translate(-50%,-20px); background:#fff; border-radius:20px; padding:14px 18px; font-weight:900; opacity:0; pointer-events:none; transition:.25s; z-index:30; box-shadow:var(--shadow); text-align:center; }
-    .toast.show { opacity:1; transform:translate(-50%,0); }
-    .stars { font-size:44px; letter-spacing:7px; text-align:center; animation:pop .5s ease-out; }
-    @keyframes pop { from { transform:scale(.4); opacity:0 } }
-    @media (max-width: 640px) {
-      body { padding:0; }
-      .app { width:100%; }
-      .topbar { padding:10px 12px 0; }
-      .scene { min-height:calc(100dvh - 66px); border-radius:22px 22px 0 0; border-left:0; border-right:0; border-bottom:0; }
-      .bathroom { left:2%; width:49%; }
-      .dinner { right:2%; width:45%; }
-      .kid { transform:scale(.82); transform-origin:bottom center; left:16%; }
-      .kid.at-bath { left:16%; }
-      .kid.at-table { left:62%; transform:scale(.76); }
-      .soap { left:8%; bottom:15%; }
-      .panel { bottom:10px; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Clean Kids - Tập 1</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:linear-gradient(#c8f1ff,#fff3c9);color:#16324a;min-height:100dvh;display:grid;place-items:center}.app{width:min(950px,100%);padding:12px}.head{display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:clamp(20px,4vw,30px);margin:4px 4px 10px}.tag{font-size:14px;background:#fff;padding:8px 12px;border-radius:99px}.scene{position:relative;min-height:min(760px,calc(100dvh - 80px));overflow:hidden;border:4px solid #fff;border-radius:28px;background:linear-gradient(#bcecff 0 42%,#f7efd8 42%);box-shadow:0 15px 40px #3a76952b}.bath,.dining{position:absolute;bottom:26%;height:43%;border:4px solid white;border-radius:24px}.bath{left:3%;width:46%;background:#dff7ff}.dining{right:3%;width:44%;background:#fff1c5}.bath:before,.dining:before{position:absolute;top:12px;left:14px;font-size:13px;font-weight:900;opacity:.55}.bath:before{content:'PHÒNG TẮM'}.dining:before{content:'BỮA TỐI'}.shower{position:absolute;top:58px;right:23%;width:68px;height:40px;border:8px solid #719bb8;border-left:0;border-bottom:0;border-radius:0 28px 0 0}.water{position:absolute;right:16%;top:106px;width:70px;height:190px;opacity:0;background:repeating-linear-gradient(90deg,transparent 0 8px,#54baff77 8px 12px);transition:.2s}.water.on{opacity:1;animation:flow .6s linear infinite}@keyframes flow{to{background-position-y:30px}}.table{position:absolute;left:12%;right:12%;bottom:30%;height:20px;border-radius:10px;background:#ad7044}.plate{position:absolute;left:50%;bottom:38%;transform:translateX(-50%);width:120px;height:50px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 7px #d8eaf3}.rice{position:absolute;left:50%;bottom:45%;transform:translateX(-50%);width:72px;height:40px;border-radius:50%;background:#fffdf5}.kid{position:absolute;left:18%;bottom:26%;width:150px;height:250px;z-index:5;transition:.65s}.kid.tablepos{left:67%;bottom:23%}.face{position:absolute;top:18px;left:40px;width:76px;height:80px;border-radius:45%;background:#f3bb8b}.hair{position:absolute;top:8px;left:38px;width:80px;height:38px;border-radius:40px 40px 15px 15px;background:#493328}.eyes:before,.eyes:after{content:'';position:absolute;top:49px;width:8px;height:10px;border-radius:50%;background:#25364a;z-index:2}.eyes:before{left:60px}.eyes:after{left:91px}.mouth{position:absolute;top:73px;left:70px;width:22px;height:10px;border-bottom:4px solid #a55b55;border-radius:50%;z-index:2}.body{position:absolute;top:94px;left:30px;width:94px;height:102px;border-radius:28px;background:#ff9c68}.arm{position:absolute;top:108px;width:25px;height:88px;background:#f3bb8b;border-radius:18px}.a1{left:19px;transform:rotate(12deg)}.a2{right:12px;transform:rotate(-14deg)}.leg{position:absolute;top:184px;width:30px;height:69px;background:#5077b7;border-radius:17px}.l1{left:42px}.l2{left:82px}.dirt,.germ{position:absolute;z-index:8;transition:.4s}.dirt{width:17px;height:12px;border-radius:50%;background:#775942}.d1{top:75px;left:43px}.d2{top:130px;left:20px}.d3{top:158px;right:18px}.d4{top:205px;right:38px}.germ{font-size:29px;animation:bob .8s alternate infinite}.g1{top:63px;right:10px}.g2{top:136px;left:4px}.g3{top:185px;right:13px}@keyframes bob{to{transform:translateY(-8px) rotate(8deg)}}.clean .dirt,.clean .germ{opacity:0;transform:scale(.2)}.soap{position:absolute;left:12%;bottom:15%;z-index:15;font-size:38px;background:#ff9bc7;border:4px solid #fff;border-radius:18px;padding:8px 16px;touch-action:none;user-select:none;cursor:grab}.panel{position:absolute;z-index:30;bottom:14px;left:50%;transform:translateX(-50%);width:min(92%,760px);background:#fffffff2;border-radius:22px;padding:14px;box-shadow:0 12px 32px #345f7a2b}.msg{text-align:center;font-weight:900;font-size:clamp(17px,3vw,22px);min-height:30px}.detail{text-align:center;margin:7px 0 10px;font-weight:700;opacity:.8;min-height:22px}.bar{height:17px;background:#d9e8ec;border-radius:99px;overflow:hidden;margin:8px 0 12px}.bar>div{height:100%;width:0;background:linear-gradient(90deg,#4ebcff,#62d987);transition:.2s}.buttons{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.btn{border:0;border-radius:15px;padding:12px 16px;font:inherit;font-weight:900;background:#fff;box-shadow:0 4px 0 #1d4e7122}.primary{background:#ffdb62}.good{background:#86e3a1}.bad{background:#ffc1b7}.card{position:absolute;z-index:25;left:50%;top:14%;transform:translate(-50%,-12px);width:min(86%,620px);background:white;border-radius:24px;padding:18px;box-shadow:0 14px 40px #254d6835;opacity:0;pointer-events:none;transition:.25s}.card.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}.card h2{margin:0 0 8px;text-align:center}.effects{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.effect{background:#f5f8fa;border-radius:16px;padding:10px;text-align:center;font-weight:800}.effect b{display:block;font-size:28px;margin-bottom:4px}.stars{text-align:center;font-size:42px}.bubble{position:absolute;border:2px solid #65b7dd88;background:#ffffffaa;border-radius:50%;z-index:20;pointer-events:none;animation:rise .9s forwards}@keyframes rise{to{transform:translateY(-80px) scale(1.4);opacity:0}}@media(max-width:620px){.app{padding:0}.head{padding:8px 10px 0}.scene{border-left:0;border-right:0;border-bottom:0;border-radius:22px 22px 0 0;min-height:calc(100dvh - 66px)}.kid{transform:scale(.78);transform-origin:bottom center;left:13%}.kid.tablepos{left:61%;transform:scale(.72)}.bath{left:1%;width:49%}.dining{right:1%;width:47%}.effects{grid-template-columns:1fr}.card{top:9%}.soap{left:6%;bottom:17%}}
+</style>
 </head>
 <body>
-  <main class="app">
-    <header class="topbar">
-      <div class="brand">🫧 Clean Kids</div>
-      <div class="episode">Tập 1 · Trước bữa tối</div>
-    </header>
-
-    <section class="scene" id="scene" aria-label="Hoạt cảnh tắm sạch trước khi ăn tối">
-      <div class="sun"></div><div class="cloud"></div><div class="room-line"></div>
-      <div class="bathroom">
-        <div class="shower"></div><div class="water" id="water"></div>
-      </div>
-      <div class="dinner">
-        <div class="table"></div><div class="plate"></div><div class="rice"></div>
-      </div>
-
-      <div class="kid" id="kid" aria-label="Bạn nhỏ đang bị bẩn">
-        <div class="hair"></div><div class="head"></div>
-        <div class="eye l"></div><div class="eye r"></div><div class="smile"></div>
-        <div class="body"></div><div class="arm l"></div><div class="arm r"></div><div class="leg l"></div><div class="leg r"></div>
-        <i class="dirt d1"></i><i class="dirt d2"></i><i class="dirt d3"></i><i class="dirt d4"></i><i class="dirt d5"></i>
-        <i class="germ g1">😈</i><i class="germ g2">😈</i><i class="germ g3">😈</i>
-      </div>
-
-      <div class="soap" id="soap" role="button" aria-label="Xà phòng">🧼</div>
-      <div class="toast" id="toast"></div>
-
-      <div class="panel">
-        <div class="message" id="message">Đến giờ ăn tối rồi! Nhưng bạn nhỏ vừa chơi ngoài sân về.</div>
-        <div class="progress" aria-label="Độ sạch"><div id="progressFill"></div></div>
-        <div class="actions" id="actions">
-          <button class="btn primary" id="startBtn">👀 Xem vi khuẩn</button>
-        </div>
-        <div class="hint" id="hint">Chạm để bắt đầu câu chuyện</div>
-      </div>
-    </section>
-  </main>
-
+<main class="app">
+<div class="head"><span>🫧 Clean Kids</span><span class="tag">Tập 1 · Tắm trước bữa tối</span></div>
+<section class="scene" id="scene">
+  <div class="bath"><div class="shower"></div><div class="water" id="water"></div></div>
+  <div class="dining"><div class="table"></div><div class="plate"></div><div class="rice"></div></div>
+  <div class="kid" id="kid"><div class="hair"></div><div class="face"></div><div class="eyes"></div><div class="mouth"></div><div class="body"></div><div class="arm a1"></div><div class="arm a2"></div><div class="leg l1"></div><div class="leg l2"></div><i class="dirt d1"></i><i class="dirt d2"></i><i class="dirt d3"></i><i class="dirt d4"></i><i class="germ g1">🦠</i><i class="germ g2">🦠</i><i class="germ g3">🦠</i></div>
+  <div class="soap" id="soap">🧼</div>
+  <div class="card" id="card"></div>
+  <div class="panel"><div class="msg" id="msg">Bạn nhỏ vừa chạy nhảy ngoài sân về và sắp ăn tối.</div><div class="detail" id="detail">Trên da đang có mồ hôi, bụi bẩn và vi sinh vật từ môi trường.</div><div class="bar"><div id="fill"></div></div><div class="buttons" id="buttons"><button class="btn primary" id="start">Bắt đầu 👀</button></div></div>
+</section>
+</main>
 <script>
-(() => {
-  const scene = document.getElementById('scene');
-  const kid = document.getElementById('kid');
-  const soap = document.getElementById('soap');
-  const water = document.getElementById('water');
-  const message = document.getElementById('message');
-  const actions = document.getElementById('actions');
-  const hint = document.getElementById('hint');
-  const toast = document.getElementById('toast');
-  const fill = document.getElementById('progressFill');
-
-  let stage = 0;
-  let clean = 0;
-  let scrubbing = false;
-  let pointerId = null;
-  let lastBubble = 0;
-
-  function setMessage(text, hintText='') {
-    message.textContent = text;
-    hint.textContent = hintText;
-  }
-
-  function button(label, className, onClick) {
-    const b = document.createElement('button');
-    b.className = 'btn ' + (className || '');
-    b.textContent = label;
-    b.addEventListener('click', onClick);
-    return b;
-  }
-
-  function setActions(...buttons) {
-    actions.replaceChildren(...buttons);
-  }
-
-  function showToast(text, ms=1600) {
-    toast.textContent = text;
-    toast.classList.add('show');
-    clearTimeout(showToast.t);
-    showToast.t = setTimeout(() => toast.classList.remove('show'), ms);
-  }
-
-  function setClean(value) {
-    clean = Math.max(0, Math.min(100, value));
-    fill.style.width = clean + '%';
-    if (clean >= 100) finishBath();
-  }
-
-  function startStory() {
-    stage = 1;
-    setMessage('Ôi! Bụi bẩn và vi khuẩn đang bám trên người!', 'Con có nhìn thấy những bạn vi khuẩn tinh nghịch không?');
-    setActions(
-      button('🍚 Ăn luôn', '', tryEatDirty),
-      button('🚿 Đi tắm', 'primary', goBath)
-    );
-  }
-
-  function tryEatDirty() {
-    showToast('🦠 Khoan! Vi khuẩn có thể theo tay và cơ thể bẩn đến gần thức ăn.');
-    kid.classList.remove('at-table');
-    setMessage('Mình nên tắm rửa sạch sẽ trước khi ăn tối nhé!', 'Chọn “Đi tắm” để giúp bạn nhỏ.');
-  }
-
-  function goBath() {
-    stage = 2;
-    kid.classList.add('at-bath');
-    water.classList.add('on');
-    setClean(10);
-    setMessage('Bật nước rồi! Bây giờ dùng xà phòng để làm sạch.', 'Kéo cục xà phòng 🧼 chà lên bạn nhỏ.');
-    setActions(button('💦 Dội nước', '', () => {
-      if (clean < 35) showToast('Nước giúp trôi bụi, nhưng cần xà phòng để làm sạch kỹ hơn!');
-      else setClean(clean + 6);
-    }));
-  }
-
-  function finishBath() {
-    if (stage >= 3) return;
-    stage = 3;
-    kid.classList.add('cleaning');
-    soap.style.display = 'none';
-    water.classList.remove('on');
-    setMessage('Sạch bóng rồi! Vi khuẩn và bụi bẩn đã được rửa trôi.', 'Giờ thì có thể mặc đồ sạch và đi ăn tối.');
-    setActions(button('👕 Mặc đồ sạch', 'good', readyDinner));
-    celebrateBubbles();
-  }
-
-  function readyDinner() {
-    stage = 4;
-    kid.classList.remove('at-bath');
-    kid.classList.add('at-table');
-    setMessage('Tuyệt lắm! Cơ thể sạch sẽ trước bữa ăn.', 'Một thói quen nhỏ giúp mình khỏe mạnh mỗi ngày.');
-    setActions(button('🍚 Ăn tối thôi!', 'primary', success));
-  }
-
-  function success() {
-    stage = 5;
-    setMessage('Hoàn thành Tập 1! Tắm sạch trước bữa tối khi cơ thể bẩn nhé.', 'Clean Kids · Sạch sẽ – khỏe mạnh – vui vẻ!');
-    const stars = document.createElement('div');
-    stars.className = 'stars'; stars.textContent = '⭐ ⭐ ⭐';
-    actions.replaceChildren(stars, button('↻ Chơi lại', '', reset));
-    celebrateBubbles(24);
-  }
-
-  function reset() {
-    stage = 0; clean = 0; fill.style.width='0%';
-    kid.className = 'kid'; soap.style.display='grid'; water.classList.remove('on');
-    setMessage('Đến giờ ăn tối rồi! Nhưng bạn nhỏ vừa chơi ngoài sân về.', 'Chạm để bắt đầu câu chuyện');
-    setActions(button('👀 Xem vi khuẩn', 'primary', startStory));
-  }
-
-  function createBubble(x, y, big=false) {
-    const b = document.createElement('i');
-    b.className='bubble';
-    const s = big ? 22 + Math.random()*22 : 10 + Math.random()*18;
-    b.style.width=s+'px'; b.style.height=s+'px'; b.style.left=(x-s/2)+'px'; b.style.top=(y-s/2)+'px';
-    scene.appendChild(b); setTimeout(()=>b.remove(),950);
-  }
-
-  function celebrateBubbles(n=14) {
-    const r=scene.getBoundingClientRect();
-    for(let i=0;i<n;i++) setTimeout(()=>createBubble(Math.random()*r.width, r.height*(.35+Math.random()*.45), true), i*45);
-  }
-
-  function scrubAt(clientX, clientY) {
-    if(stage!==2) return;
-    const sr=scene.getBoundingClientRect(), kr=kid.getBoundingClientRect();
-    const x=clientX-sr.left, y=clientY-sr.top;
-    soap.style.position='absolute'; soap.style.left=(x-38)+'px'; soap.style.top=(y-25)+'px'; soap.style.bottom='auto';
-    const over = clientX >= kr.left-25 && clientX <= kr.right+25 && clientY >= kr.top-25 && clientY <= kr.bottom+25;
-    const now=performance.now();
-    if(over) {
-      if(now-lastBubble>55) { createBubble(x,y); lastBubble=now; }
-      setClean(clean + 1.7);
-      if(clean > 35 && clean < 45) showToast('🫧 Giỏi lắm! Nhớ chà khắp người nhé.');
-      if(clean > 70 && clean < 80) showToast('🦠 Vi khuẩn đang chạy mất rồi!');
-    }
-  }
-
-  soap.addEventListener('pointerdown', e => {
-    if(stage!==2) { if(stage<2) showToast('Đi tắm trước rồi mình dùng xà phòng nhé!'); return; }
-    pointerId=e.pointerId; scrubbing=true; soap.setPointerCapture(pointerId); soap.classList.add('active'); scrubAt(e.clientX,e.clientY); e.preventDefault();
-  });
-  soap.addEventListener('pointermove', e => { if(scrubbing && e.pointerId===pointerId) { scrubAt(e.clientX,e.clientY); e.preventDefault(); } });
-  function release(e){ if(!scrubbing) return; scrubbing=false; pointerId=null; soap.classList.remove('active'); }
-  soap.addEventListener('pointerup', release); soap.addEventListener('pointercancel', release);
-
-  document.getElementById('startBtn').addEventListener('click', startStory);
+(()=>{
+const scene=document.querySelector('#scene'),kid=document.querySelector('#kid'),soap=document.querySelector('#soap'),water=document.querySelector('#water'),msg=document.querySelector('#msg'),detail=document.querySelector('#detail'),buttons=document.querySelector('#buttons'),fill=document.querySelector('#fill'),card=document.querySelector('#card');
+let stage=0,clean=0,drag=false,pid=null,last=0;
+const btn=(t,c,f)=>{const b=document.createElement('button');b.className='btn '+(c||'');b.textContent=t;b.onclick=f;return b};
+const actions=(...x)=>buttons.replaceChildren(...x);
+function text(a,b=''){msg.textContent=a;detail.textContent=b}
+function info(title,items,next){card.innerHTML=`<h2>${title}</h2><div class="effects">${items.map(x=>`<div class="effect"><b>${x[0]}</b>${x[1]}</div>`).join('')}</div><div class="buttons" style="margin-top:12px"></div>`;card.classList.add('show');const area=card.querySelector('.buttons');area.append(btn('Hiểu rồi ✓','primary',()=>{card.classList.remove('show');next&&next()}))}
+function setClean(v){clean=Math.min(100,v);fill.style.width=clean+'%';if(clean>=100)doneBath()}
+function start(){stage=1;text('Nhìn kỹ nhé: cơ thể chưa sạch trước bữa tối.','Nếu vừa chơi ngoài trời, mồ hôi và bụi bẩn có thể còn bám trên da.');actions(btn('🍚 Không tắm, ăn luôn','bad',dirtyChoice),btn('🚿 Tắm trước','primary',bath))}
+function dirtyChoice(){kid.classList.add('tablepos');info('Nếu cứ để cơ thể bẩn thì sao?',[
+['🦠','Vi sinh vật và bụi bẩn vẫn còn bám trên da, đặc biệt ở bàn tay.'],
+['😣','Mồ hôi + bụi có thể gây mùi khó chịu, bí da hoặc ngứa ở một số trẻ.'],
+['🍚','Tay bẩn chạm thức ăn hoặc đưa lên miệng có thể làm tăng nguy cơ đưa mầm bệnh vào cơ thể.']
+],()=>{kid.classList.remove('tablepos');text('Vậy mình làm sạch cơ thể trước khi ngồi ăn nhé!','Tắm không làm cơ thể “vô trùng”, nhưng giúp rửa trôi mồ hôi, bụi bẩn và giảm vi sinh vật bám ngoài da.');actions(btn('🚿 Đi tắm ngay','primary',bath))})}
+function bath(){stage=2;kid.classList.remove('tablepos');water.classList.add('on');setClean(8);text('Bắt đầu tắm!','Kéo xà phòng 🧼 chà lên bạn nhỏ để làm sạch.');actions(btn('💦 Xả nước','',()=>{if(clean<35)info('Chỉ nước thôi chưa đủ', [['💧','Nước giúp rửa trôi một phần mồ hôi và bụi.'],['🧼','Xà phòng giúp cuốn dầu, chất bẩn và nhiều vi sinh vật khỏi bề mặt da.'],['👐','Chà nhẹ các vùng bẩn rồi xả sạch.']],null);else setClean(clean+5)}))}
+function bubble(x,y){const e=document.createElement('i');e.className='bubble';let s=10+Math.random()*19;e.style.cssText=`width:${s}px;height:${s}px;left:${x-s/2}px;top:${y-s/2}px`;scene.append(e);setTimeout(()=>e.remove(),950)}
+function scrub(cx,cy){if(stage!==2)return;const sr=scene.getBoundingClientRect(),kr=kid.getBoundingClientRect(),x=cx-sr.left,y=cy-sr.top;soap.style.left=x-40+'px';soap.style.top=y-28+'px';soap.style.bottom='auto';if(cx>kr.left-25&&cx<kr.right+25&&cy>kr.top-25&&cy<kr.bottom+25){if(performance.now()-last>50){bubble(x,y);last=performance.now()}setClean(clean+1.6)}}
+soap.onpointerdown=e=>{if(stage!==2)return;drag=true;pid=e.pointerId;soap.setPointerCapture(pid);scrub(e.clientX,e.clientY)};soap.onpointermove=e=>{if(drag&&e.pointerId===pid)scrub(e.clientX,e.clientY)};soap.onpointerup=soap.onpointercancel=()=>{drag=false;pid=null};
+function doneBath(){if(stage>=3)return;stage=3;kid.classList.add('clean');water.classList.remove('on');soap.style.display='none';info('Sau khi tắm sạch thì sao?',[
+['✨','Mồ hôi và bụi bẩn được rửa trôi, cơ thể sạch và dễ chịu hơn.'],
+['🦠⬇️','Lượng vi sinh vật bám ngoài da giảm đi đáng kể nhờ rửa và xà phòng.'],
+['🍽️','Mặc đồ sạch, rửa tay đúng cách rồi ngồi ăn giúp bữa tối vệ sinh hơn.']
+],()=>{text('Sạch sẽ và thơm tho rồi!','Bước cuối: mặc quần áo sạch và nhớ rửa tay trước khi ăn.');actions(btn('👕 Mặc đồ sạch','good',ready))})}
+function ready(){kid.classList.add('tablepos');text('Giờ thì sẵn sàng cho bữa tối!','Tắm khi cơ thể bẩn + rửa tay trước ăn = thói quen vệ sinh tốt.');actions(btn('🍚 Ăn tối thôi!','primary',finish))}
+function finish(){text('Hoàn thành Tập 1! 🌟','Bài học: sau khi chơi bẩn, hãy làm sạch cơ thể; và luôn rửa tay trước khi ăn.');buttons.innerHTML='<div class="stars">⭐ ⭐ ⭐</div>';buttons.append(btn('↻ Chơi lại','',()=>location.reload()));for(let i=0;i<24;i++)setTimeout(()=>bubble(Math.random()*scene.clientWidth,scene.clientHeight*(.3+Math.random()*.5)),i*40)}
+document.querySelector('#start').onclick=start;
 })();
 </script>
-</body>
-</html>
+</body></html>
